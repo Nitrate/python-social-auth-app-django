@@ -15,15 +15,11 @@ BuildRequires:  python3-devel
 BuildRequires:  python3dist(setuptools)
 BuildRequires:  python3dist(django)
 BuildRequires:  python3dist(mock)
-BuildRequires:  python3dist(social-auth-core)
+BuildRequires:  python3dist(social-auth-core) >= 3.3.0
 
 %description
-Python Social Auth - DjangoPython Social Auth is an easy to setup social
-authentication/registration mechanism with support for several frameworks and
-auth providers. DescriptionThis is the [Django]( component of the [python-
-social-auth ecosystem]( it implements the needed functionality to integrate
-[social-auth-core]( in a Django based project. Django versionThis project will
-focus on the...
+Python Social Auth is an easy to setup social authentication/registration
+mechanism with support for several frameworks and auth providers.
 
 %package -n     python3-%{pypi_name}
 Summary:        %{summary}
@@ -31,14 +27,10 @@ Summary:        %{summary}
 
 Requires:       python3dist(six)
 Requires:       python3dist(social-auth-core) >= 3.3.0
-%description -n python3-%{pypi_name}
-Python Social Auth - DjangoPython Social Auth is an easy to setup social
-authentication/registration mechanism with support for several frameworks and
-auth providers. DescriptionThis is the [Django]( component of the [python-
-social-auth ecosystem]( it implements the needed functionality to integrate
-[social-auth-core]( in a Django based project. Django versionThis project will
-focus on the...
 
+%description -n python3-%{pypi_name}
+Python Social Auth is an easy to setup social authentication/registration
+mechanism with support for several frameworks and auth providers.
 
 %prep
 %autosetup -n %{pypi_name}-%{version}
@@ -52,13 +44,14 @@ rm -rf %{pypi_name}.egg-info
 %py3_install
 
 %check
+# The sdist does not include this test data
 mkdir tests/templates/
 echo -n "test" > tests/templates/test.html
 python3 manage.py test
 
 %files -n python3-%{pypi_name}
 %license LICENSE
-%doc README.md
+%doc README.md CHANGELOG.md
 %{python3_sitelib}/social_django
 %{python3_sitelib}/social_auth_app_django-%{version}-py%{python3_version}.egg-info
 
